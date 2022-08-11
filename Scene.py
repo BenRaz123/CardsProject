@@ -1,9 +1,28 @@
 from manim import *
 class PlayingCard():
-    def __init__(self, number, suit, icon):
+    def __init__(self, number:int, suit:int):
         self.number = number
         self.suit = suit
-        self.icon = icon
+        if suit == 1:
+            suitName = "$\spadesuit$"
+        elif suit == 2:
+            suitName = "$\clubsuit$"
+        elif suit == 3:
+            suitName = "$\diamondsuit$"
+        elif suit == 4:
+            suitName = "$\diamondsuit$"
+
+        if number == 11:
+            royaltyIcon = "J"
+        elif number == 12:
+            royaltyIcon = "Q"
+        elif number == 13: 
+            royaltyIcon = "K"
+        elif number == 14:
+            royaltyIcon = "A"
+        else:
+            royaltyIcon = ""
+        self.icon = f"{royaltyIcon or number}{suitName}"
     
     def getColor(self):
         if self.suit < 2:
@@ -24,18 +43,16 @@ class PlayingCard():
 
 class Example(Scene):
     def construct(self):
-        
-        self.camera.background_color = DARKER_GRAY
-        
-        KingOfSpades = PlayingCard(13, 1, "K$\spadesuit$")
-        KingOfSpades = KingOfSpades.generateCard()
 
-        ThreeOfDiamonds = PlayingCard(3, 3, "3$\diamondsuit$")
-        ThreeOfDiamonds = ThreeOfDiamonds.generateCard()
+        self.camera.background_color = DARKER_GRAY
+
+        KingOfSpades = PlayingCard(13, 1).generateCard()
+
+        ThreeOfDiamonds = PlayingCard(3, 3).generateCard()
 
         ThreeOfDiamonds.next_to(KingOfSpades, RIGHT)
 
         VGroup(KingOfSpades, ThreeOfDiamonds).center()
 
-        self.play(FadeIn(KingOfSpades, shift=RIGHT*1.5, scale=0.25), FadeIn(ThreeOfDiamonds, shift=LEFT*1.5, scale=0.25))
+        self.play(FadeIn(KingOfSpades, shift=RIGHT*1.5, scale=0.25),FadeIn(ThreeOfDiamonds, shift=LEFT*1.5, scale=0.25))
         self.wait()
